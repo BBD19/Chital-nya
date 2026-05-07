@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Window
-    x:Class="BookInterface.MainWindow"
+    x:Class="Chital.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:BookInterface"
+    xmlns:local="using:Chital"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -64,7 +64,7 @@
                         </Button>
 
                         <!-- Кнопка "Каталог" -->
-                        <Button Content="Каталог" FontWeight="Bold" HorizontalAlignment="Stretch" Height="48" 
+                        <Button Content="Каталог" Click="OnCatalogClicked" FontWeight="Bold" HorizontalAlignment="Stretch" Height="48" 
                     CornerRadius="10" Background="White" BorderBrush="#E2E8F0" Foreground="#1E293B" Translation="0,0,8">
                             <Button.Shadow>
                                 <ThemeShadow />
@@ -422,20 +422,20 @@
 
                 <!-- Поля вкладки "Вход" -->
                 <StackPanel x:Name="LoginFields" Spacing="20" Visibility="Visible">
-                    <TextBox PlaceholderText="Номер телефона..." Height="50" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
-                    <PasswordBox PlaceholderText="Пароль..." Height="50" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
-                    <Button Content="Войти" HorizontalAlignment="Stretch" Height="50" Background="#36545D" Foreground="White" CornerRadius="25" FontWeight="Bold" Margin="0,20,0,0"/>
+                    <TextBox x:Name="LoginPhoneBox" PlaceholderText="Номер телефона..." Height="50" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
+                    <PasswordBox x:Name="LoginPasswordBox" PlaceholderText="Пароль..." Height="50" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
+                    <Button Content="Войти" Click="OnLoginClicked" HorizontalAlignment="Stretch" Height="50" Background="#36545D" Foreground="White" CornerRadius="25" FontWeight="Bold" Margin="0,20,0,0"/>
                     <TextBlock x:Name="ForgotBtn" Text="Забыли пароль?" PointerPressed="OnForgotClicked" Foreground="#36545D" HorizontalAlignment="Center" FontWeight="SemiBold"/>
                 </StackPanel>
 
                 <!-- Поля вкладки "Регистрация" -->
                 <StackPanel x:Name="RegisterFields" Spacing="15" Visibility="Collapsed">
-                    <TextBox PlaceholderText="Имя..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
-                    <TextBox PlaceholderText="Фамилия..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
-                    <TextBox PlaceholderText="Номер читательского билета..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
-                    <TextBox PlaceholderText="Номер телефона..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
-                    <PasswordBox PlaceholderText="Пароль..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
-                    <Button Content="Зарегистрироваться" HorizontalAlignment="Stretch" Height="50" Background="#36545D" Foreground="White" CornerRadius="25" FontWeight="Bold" Margin="0,20,0,0"/>
+                    <TextBox x:Name="FirstNameBox" PlaceholderText="Имя..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
+                    <TextBox x:Name="LastNameBox" PlaceholderText="Фамилия..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
+                    <TextBox x:Name="LibraryCardBox" PlaceholderText="Номер читательского билета..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
+                    <TextBox x:Name="PhoneBox" PlaceholderText="Номер телефона..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
+                    <PasswordBox x:Name="PasswordRegBox" PlaceholderText="Пароль..." Height="45" CornerRadius="8" Background="#F8F8F8" BorderBrush="#F0F0F0"/>
+                    <Button Content="Зарегистрироваться" Click="OnRegisterClicked" HorizontalAlignment="Stretch" Height="50" Background="#36545D" Foreground="White" CornerRadius="25" FontWeight="Bold" Margin="0,20,0,0"/>
                 </StackPanel>
 
                 <!-- Поля вкладки "Забыли пароль?" -->
@@ -443,8 +443,203 @@
                     <TextBlock Text="Для восстановления доступа или уточнения данных, пожалуйста, обратитесь к библиотекорше." 
                        FontSize="16" Foreground="#1E293B" TextWrapping="Wrap" LineHeight="24"/>
                 </StackPanel>
-                
+
             </StackPanel>
+        </Grid>
+        <!-- Оверлей профиля -->
+        <Grid x:Name="ProfileOverlay" Visibility="Collapsed" Background="White">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <StackPanel Width="600" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,50" Spacing="25">
+
+                    <!-- Заголовок с кнопкой закрытия -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Click="OnCloseProfileClicked" Background="Transparent" BorderBrush="Transparent">
+                            <FontIcon Glyph="&#xE711;" FontSize="24" Foreground="#1E293B"/>
+                        </Button>
+
+                        <TextBlock Grid.Column="1" Text="Мой профиль" FontSize="28" FontWeight="Bold" 
+                                   Foreground="#1E293B" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                        <Button Grid.Column="2" Click="OnLogoutClicked" Background="Transparent" BorderBrush="Transparent">
+                            <FontIcon Glyph="&#xE8BB;" FontSize="20" Foreground="#DC2626"/>
+                        </Button>
+                    </Grid>
+
+                    <!-- Карточка информации о пользователе -->
+                    <Border Background="White" CornerRadius="16" Padding="25" 
+                            BorderBrush="#E2E8F0" BorderThickness="1">
+                        <Border.Shadow>
+                            <ThemeShadow />
+                        </Border.Shadow>
+
+                        <StackPanel Spacing="15">
+                            <!-- Аватар -->
+                            <Grid HorizontalAlignment="Center" Margin="0,0,0,10">
+                                <Border Width="80" Height="80" CornerRadius="40" Background="#36545D">
+                                    <TextBlock x:Name="ProfileInitialsText" Text="Ч" FontSize="32" FontWeight="Bold" 
+                                               Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+
+                            <!-- Имя -->
+                            <TextBlock x:Name="ProfileNameText" Text="Иван Иванов" FontSize="24" FontWeight="Bold" 
+                                       Foreground="#1E293B" HorizontalAlignment="Center"/>
+
+                            <!-- Номер билета -->
+                            <TextBlock x:Name="ProfileCardText" Text="Билет №12345" FontSize="16" 
+                                       Foreground="#36545D" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+
+                            <!-- Телефон -->
+                            <Grid HorizontalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon Glyph="&#xE717;" FontSize="16" Foreground="#64748B" VerticalAlignment="Center"/>
+                                    <TextBlock x:Name="ProfilePhoneText" Text="+7 (999) 123-45-67" FontSize="15" 
+                                               Foreground="#64748B" VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Статистика -->
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Border Grid.Column="0" Background="#F0F9FF" CornerRadius="12" Padding="15" Margin="0,0,10,0">
+                            <StackPanel HorizontalAlignment="Center" Spacing="5">
+                                <FontIcon Glyph="&#xE735;" FontSize="24" Foreground="#F59E0B"/>
+                                <TextBlock x:Name="ProfileBooksCountText" Text="0 книг" FontSize="18" FontWeight="Bold" 
+                                           Foreground="#1E293B" HorizontalAlignment="Center"/>
+                                <TextBlock Text="Прочитано" FontSize="13" Foreground="#64748B" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+
+                        <Border Grid.Column="1" Background="#F0FDF4" CornerRadius="12" Padding="15" Margin="10,0,0,0">
+                            <StackPanel HorizontalAlignment="Center" Spacing="5">
+                                <FontIcon Glyph="&#xE8CB;" FontSize="24" Foreground="#22C55E"/>
+                                <TextBlock x:Name="ProfileDaysText" Text="0 дней" FontSize="18" FontWeight="Bold" 
+                                           Foreground="#1E293B" HorizontalAlignment="Center"/>
+                                <TextBlock Text="С нами" FontSize="13" Foreground="#64748B" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Border>
+                    </Grid>
+
+                    <!-- Заголовок списка книг -->
+                    <Grid>
+                        <StackPanel Orientation="Horizontal" Spacing="10">
+                            <FontIcon Glyph="&#xE8A9;" FontSize="24" Foreground="#36545D" VerticalAlignment="Center"/>
+                            <TextBlock Text="Мои книги" FontSize="22" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <Rectangle Height="2" Fill="#E2E8F0" VerticalAlignment="Bottom" Margin="0,5,0,0"/>
+                    </Grid>
+
+                    <!-- Список книг пользователя -->
+                    <StackPanel x:Name="UserBooksList" Spacing="10">
+                        <!-- Книги будут добавляться здесь динамически -->
+                    </StackPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+        <!-- Оверлей каталога -->
+        <Grid x:Name="CatalogOverlay" Visibility="Collapsed" Background="#F1F5F9">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Заголовок каталога -->
+            <Grid Grid.Row="0" Background="White" Padding="20" BorderBrush="#E2E8F0" BorderThickness="0,0,0,1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Click="OnCloseCatalogClicked" Background="Transparent" BorderBrush="Transparent" VerticalAlignment="Center">
+                    <FontIcon Glyph="&#xE711;" FontSize="20" Foreground="#1E293B"/>
+                </Button>
+
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="10">
+                    <FontIcon Glyph="&#xE8A9;" FontSize="24" Foreground="#36545D" VerticalAlignment="Center"/>
+                    <TextBlock Text="Каталог книг" FontSize="24" FontWeight="Bold" Foreground="#1E293B" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Поиск в каталоге -->
+            <Grid Grid.Row="1" Background="White" Padding="15,10" BorderBrush="#E2E8F0" BorderThickness="0,0,0,1">
+                <Border Background="White" BorderBrush="#D1D8E0" BorderThickness="1" CornerRadius="10" Height="40"
+                        HorizontalAlignment="Center" Width="500">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <FontIcon Glyph="&#xE721;" FontSize="14" Foreground="Gray" Margin="12,0,8,0" VerticalAlignment="Center"/>
+
+                        <TextBox x:Name="CatalogSearchBox" Grid.Column="1" 
+                                 PlaceholderText="Поиск по названию, автору или жанру..."
+                                 BorderThickness="0" Background="Transparent"
+                                 VerticalAlignment="Center" FontSize="14"/>
+
+                        <Button Grid.Column="2" Click="OnCatalogSearchClicked" 
+                                Background="#36545D" Foreground="White" CornerRadius="0,10,10,0" 
+                                Padding="15,0" Height="40">
+                            <TextBlock Text="Найти" FontSize="13" FontWeight="SemiBold"/>
+                        </Button>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Список книг -->
+            <ScrollViewer Grid.Row="2" Padding="30">
+                <StackPanel>
+                    <!-- Популярные книги -->
+                    <TextBlock Text="Популярные книги" FontSize="22" FontWeight="Bold" 
+                               Foreground="#1E293B" Margin="0,0,0,20"/>
+
+                    <GridView x:Name="PopularBooksGrid" 
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.HorizontalScrollMode="Disabled">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
+
+                    <!-- Разделитель -->
+                    <Grid Margin="0,30,0,20">
+                        <StackPanel Orientation="Horizontal" Spacing="20" HorizontalAlignment="Center">
+                            <Rectangle Width="80" Height="2" Fill="#46C6BA" Opacity="0.3" VerticalAlignment="Center"/>
+                            <TextBlock Text="Все книги" FontSize="20" Foreground="#46C6BA" FontWeight="SemiBold"/>
+                            <Rectangle Width="80" Height="2" Fill="#46C6BA" Opacity="0.3" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Все книги -->
+                    <GridView x:Name="AllBooksGrid"
+                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                              ScrollViewer.HorizontalScrollMode="Disabled">
+                        <GridView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <ItemsWrapGrid Orientation="Horizontal" MaximumRowsOrColumns="3"/>
+                            </ItemsPanelTemplate>
+                        </GridView.ItemsPanel>
+                    </GridView>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Window>
